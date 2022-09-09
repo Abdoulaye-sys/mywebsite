@@ -1,0 +1,13 @@
+# J'active la réécriture d'URL
+RewriteEngine On
+
+# on défini où va commencer la réécriture d'URL
+RewriteBase /php_courses
+
+#http://localhost/css/style.css
+#http://localhost/Public/css/style.css
+RewriteCond $1 ^(css|js|img)
+RewriteRule ^(.*)$ Public/$1 [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteRule ^(.*)$ App/index.php [L,QSA]
