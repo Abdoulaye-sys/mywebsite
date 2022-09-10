@@ -29,8 +29,16 @@ class Generique {
     public $deletedAt = null;
 
 
+    public function __construct(){
+        if (!$this->createdAt) {
+            $this->createdAt = date('Y-m-d');
+            $this->updatedAt = date('Y-m-d');
+        }
+    }
+
+
     public function loadFrom($data){
-        foreach($this as $property => $value){
+        foreach ($this as $property => $value){
             if (isset($data[$property])) {
                 $this->$property = $data[$property];
             }
@@ -38,6 +46,8 @@ class Generique {
     }
 
     public function save(){
+
+        // $this->updateAt = date('Y-m-d');  
         if ($this->id === null) {
             $this->id = self::insert($this);
             //return $this->id ? true : false;
@@ -90,7 +100,19 @@ class Generique {
     }
 
     
-    public static function delete(){}
+    public static function delete($object, $params = []){
+        $params = count($params) > 0 ? $params : [ "id" => $object->id ];
+        $stmt = Database::connect()->prepare(Database::delete(get_called_class(),$params));
+        foreach ($params as $key => $value){
+
+            $stmt->bindValue(":$key", $value);
+
+        }
+
+        return $stmt->execute();
+
+
+    }
 
 
 

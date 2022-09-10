@@ -11,14 +11,50 @@
             <input  type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $_SESSION['user']->firstname; ?>">
             <label for="lastNameInput" class="form-label">LastName</label>
             <input id="lastname" type="text" class="form-control" id="lastname" name="lastname"   value="<?php echo $_SESSION['user']->lastname; ?>">
-            <label for="email" class ="form-label" >Mail</label>
-            <input type="email" class="form-control" id="email" name="email" value="<?php echo $_SESSION['user']->email; ?>">
-            <div class="mb-3">
-            <label for="Password1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password">
+            <div>
+              <button type="submit">Update my profil</button>
+            </div>
           </div>
-          <button type="submit" class="btn btn-primary">Update</button>
         </form>
+        
+        <form action="/php_courses/user/updatePassword" method="POST">
+          
+          <label for="email" class ="form-label" >Mail</label>
+          <input type="email" class="form-control" id="email" name="email" value="<?php echo $_SESSION['user']->email; ?>">
+
+          <div>
+
+            <label for="oldPassword">Old Password</label>
+            <input id="oldPassword" name="oldPassword" type="password">
+          
+          </div>
+
+          <div>
+
+            <label for="newPassword">New Password</label>
+            <input id="newPassword" name="newPassword" type="password">
+          
+          </div>
+
+          <div>
+
+            <label for="confirmPassword">Confirm Password</label>
+            <input id="confirmPassword" name="confirmPassword" type="password">
+          
+          </div>
+          <div>
+              <button type="submit">Change my password</button>
+          </div>
+    
+        </form>
+
+        <div class="flex border">
+          <a class="btn btn-black" href="php_courses/user/disable">Disable my profil</a>
+          <a class="btn btn-red" href="php_courses/user/remove">Remove my profil</a>
+      </div>
+
+
+
   
         {{ Core\Template.loadTemplate(shared/footer.html)  }}
   

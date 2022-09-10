@@ -14,24 +14,27 @@ class UserController {
     }
 
     public static function register(){
-        if (User::findOne(["email" => $_POST["email"]])) {
+        if ( User::findOne(["email" => $_POST["email"]])) {
            Router::redirect("/php_courses/login");
         }
 
         $user = new User();
         $user->loadFrom($_POST); // Hydraté 
+        $user->securePassword();
         $user->save();
+        Router::redirect("/php_courses/login");
+
     }
 
     public static function login(){
         $user = User::findOne(["email" => $_POST["email"]]);
         if (!$user) {
             Router::redirect("/php_courses/register");
-        } else if ($user->password != $_POST["password"]){
+        } else if (!$user->isPasswordUser($_POST["password"])){
             Router::redirect("/php_courses/login");
         }
 
-        $_SESSION['user'] = $user;
+        $_SESSION['user'] =  $user;
         Router::redirect("/php_courses");
     }
 
@@ -51,6 +54,42 @@ class UserController {
         unset($_SESSION["user_bu"]);
         Router::redirect("/php_courses/profil");
 
+    }
+
+    public static function updatePassword(){
+        if ($_POST["newPassword"] =! $_POST["oldPassword"]) {
+            Router::redirect("/php_courses/profil");
+        }
+
+        $_SESSION["user_bu"] = clone $_SESSION["user"]; 
+
+        if($_SESSION["user"]->isPasswordUser($_POST["oldPassword"])){
+            if($_SESSION["user"]->email != ($_POST["email"])){
+            $_SESSION["user"]->email = $_POST["email"];
+        }
+
+        $_SESSION["user"]->password = $_POST["newPassword"];
+        $_SESSION["user"]->securePassword();
+        if(!$_SESSION["user"]->save()){
+            $_SESSION["user"] = $_SESSION["user_bu"];
+        }
+
+        }
+
+        unset($_SESSION["user_bu"]);
+        Router::redirect("/php_courses/profil");
+
+    }
+
+    public static function remove(){ //soft delete
+        User::delete($_SESSION["user"]);
+        self::logout();
+    }
+
+    public static function disable(){ // hard delete
+        $_SESSION["user"]->deleteAt = date('Y-m-d');
+        $_SESSION["user"]->save();
+        self::logout();
     }
 
     public static function logout(){

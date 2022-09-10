@@ -106,8 +106,19 @@ public static function update($namespace) {
 
         return $sql;
 
-    }    public static function delete($namespace){
+    }    public static function delete($namespace, $filter = []){
         self::createIfNotExist($namespace);
+
+        $sql = " DELETE FROM `$namespace` ";
+        if (count($filter) > 0){
+            $count = 0;
+            foreach ($filter as $key => $value){
+                $sql .= $count === 0 ? "WHERE `$key` = :$key " : "AND `$key` = :$key";
+                $count++;
+            }
+        }
+
+        return $sql;
 
 
 
