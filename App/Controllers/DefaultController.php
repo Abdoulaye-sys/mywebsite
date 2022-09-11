@@ -25,6 +25,12 @@ class DefaultController {
     public static function profil(){
         Template::render('profil.html');
     }
+
+    
+    public static function todo(){
+        Template::render('todo.html');
+    }
+
     public static function logout(){
         UserController::logout();
     }

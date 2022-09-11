@@ -17,6 +17,9 @@ class Database {
         return self::$instance;
     }
 
+
+    
+
     public static function createIfNotExist($namespace){
 
         $reflect = new ReflectionClass($namespace);
@@ -36,6 +39,8 @@ class Database {
 
         $sql = "CREATE TABLE IF NOT EXISTS `$namespace` ( ".join(",",$properties).") ";
         // CREATE TABLE IF NOT EXISTS `Models\User` {id, createdAt, updateAt, deletdAt }
+
+
 
 
 
@@ -78,7 +83,8 @@ class Database {
         }
 
         $sql .= "(".join(",",$propertyName).") VALUES (".join(",",$propertyValues).");";
-        //INSERT INTO `Models\User` (`id`, `createdAt`, `updatedAt`, `deledAt`) VALUES (:id, :createdAt, :updatedAt; deletedAt)
+        // $sql = "INSERT INTO `models\todo`(`id`, `list`) VALUES ('$id','$list')";
+        //INSERT INTO `Models\User` (`id`, `createdAt`, `updatedAt`, `deletedAt`) VALUES (:id, :createdAt, :updatedAt; deletedAt)
 
         return $sql;
 
@@ -119,9 +125,6 @@ public static function update($namespace) {
         }
 
         return $sql;
-
-
-
 
 
     }

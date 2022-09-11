@@ -1,0 +1,58 @@
+<body class="bg-primary">
+
+    {{ Core\Template.loadTemplate(shared/header.html)  }}
+
+    <form action="/php_courses/todo/add" method="POST">
+
+        <div class="container">
+            <div class="row jusrify-content-center m-auto  shadow bg-white mt-3 py-3 col-md-6">
+
+                <h3 class="text-center text-primary font-monospace">TODO LIST</h3>
+
+                <div class="col-8">
+                    <input type="text"  name ="list" class="form-control">
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-outline-primary">ADD</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+
+    <!-- getdata -->
+
+    
+
+    <div class="container">
+        <div class="col-8 bg-white m-auto mt-3">
+
+            <table class="table">
+                <thead>
+                
+                    <tr>
+                        <th>  N  </th>
+                        <th> Tache </th>
+                        <th>  Action  </th>
+                        
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td style="width: 10;"><a href="php_courses/todo/delete" class="btn btn-outline-danger">delete</a></td>
+                        <td style="width: 10;"><a href="php_courses/todo/update" class="btn btn-outline-success">update</a></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</body>
